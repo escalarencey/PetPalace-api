@@ -5,26 +5,21 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.0</version>
+        <version>3.2.0</version> <relativePath/>
     </parent>
-    <groupId>com.ws101</groupId>
-    <artifactId>escala</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>PetPalace-Escala</name>
+    <groupId>com.ws101.escala</groupId> <artifactId>EcommerceApi</artifactId> <version>0.0.1-SNAPSHOT</version>
+    <name>EcommerceApi</name>
 
     <properties>
-        <java.version>17</java.version>
-    </properties>
+        <java.version>17</java.version> </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+            <artifactId>spring-boot-starter-web</artifactId> </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <artifactId>lombok</artifactId> <optional>true</optional>
         </dependency>
     </dependencies>
 </project>
