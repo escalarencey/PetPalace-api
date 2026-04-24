@@ -2,11 +2,14 @@ package com.ws101.escala.model;
 
 import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
+/**
+ * Data entity representing a pet product for the EcommerceApi.
+ */
+@Getter 
+@Setter 
+@NoArgsConstructor 
+@AllArgsConstructor 
+@ToString 
 @EqualsAndHashCode
 public class Product {
     private Long id;
