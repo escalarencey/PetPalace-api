@@ -9,3 +9,4 @@ public class EscalaApplication {
         SpringApplication.run(EscalaApplication.class, args);
     }
 }
+
