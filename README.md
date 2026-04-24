@@ -5,8 +5,8 @@ This is a RESTful API backend for the Pet Palace e-commerce project. [span_12](s
 
 ## [span_13](start_span)Student Information[span_13](end_span)
 * **Name:** Rence A. Escala
-* **Section:** BSIT - 3
-* **[span_14](start_span)[span_15](start_span)Partner:** [Name of Partner] (Pair Programming Task)[span_14](end_span)[span_15](end_span)
+* **Section:** BSIT - 2b
+* **[span_14](start_span)[span_15](start_span)Partner:** Lyza Atencio (Pair Programming Task)[span_14](end_span)[span_15](end_span)
 
 ## [span_16](start_span)[span_17](start_span)Setup and Running Instructions[span_16](end_span)[span_17](end_span)
 1. Clone the repository.
