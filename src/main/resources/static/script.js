@@ -1,27 +1,30 @@
-// script.js - Lab 8 Version (Full Stack)
+/* =====================================================
+   PET PALACE - LABORATORY 8 (FULL-STACK)
+   Members: Rence A. Escala & Lyza Atencio
+   ===================================================== */
+
 const API_URL = "http://localhost:8080/api/v1/products";
 
-// Task 5: Fetch data from MySQL Database
+// Task: Fetch Data from Database via API
 async function fetchProducts() {
     try {
         const response = await fetch(API_URL);
-        if (!response.ok) throw new Error("Database connection failed");
+        if (!response.ok) throw new Error("Database Connection Failed");
         
         const products = await response.json();
-        renderProductList(products); // Ipapakita ang products sa catalog page
-        updateFeaturedProduct(products); // Para sa landing page
+        renderProductList(products);
+        updateFeaturedAndDiscounts(products);
     } catch (error) {
-        console.error("Error:", error);
+        console.error("Error fetching products:", error);
     }
 }
 
-// Function para ipakita ang products sa products.html
 function renderProductList(products) {
-    const productContainer = document.querySelector('.product-list');
-    if (!productContainer) return;
+    const container = document.querySelector('.product-list');
+    if (!container) return;
 
-    productContainer.innerHTML = products.map(p => `
-        <article class="product-card">
+    container.innerHTML = products.map(p => `
+        <article class="product-card" data-id="${p.id}">
             <img src="${p.imageUrl}" alt="${p.name}">
             <h3>${p.name}</h3>
             <p class="price">₱${p.price.toFixed(2)}</p>
@@ -33,18 +36,19 @@ function renderProductList(products) {
     `).join('');
 }
 
-// Function para sa Featured Product sa landing.html
-function updateFeaturedProduct(products) {
-    const featuredSection = document.getElementById('featured');
-    if (!featuredSection || products.length === 0) return;
-    // Kukuha lang ng isa para sa feature
-    const p = products[0]; 
-    // ... logic for featured display ...
+function updateFeaturedAndDiscounts(products) {
+    // Logic for Featured/Discount sections if they exist on the page
+    const featured = document.getElementById('featured');
+    if (featured && products.length > 0) {
+        // You can pick a specific product to feature
+    }
 }
 
-// Initialize
-document.addEventListener('DOMContentLoaded', fetchProducts);
+// Initialized App
+document.addEventListener('DOMContentLoaded', () => {
+    fetchProducts();
 
-// Global user greeting
-const greeting = document.getElementById('user-greeting');
-if (greeting) greeting.textContent = "Rence A. Escala";
+    // User Greeting
+    const greeting = document.getElementById('user-greeting');
+    if (greeting) greeting.textContent = "Rence A. Escala & Lyza Atencio";
+});
