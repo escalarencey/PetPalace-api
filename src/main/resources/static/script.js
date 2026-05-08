@@ -1,21 +1,40 @@
 /* =====================================================
-   PET PALACE - LABORATORY 8 (FULL-STACK)
+   PET PALACE - LABORATORY 9 (SECURITY & VALIDATION)
    Members: Rence A. Escala & Lyza Atencio
    ===================================================== */
 
 const API_URL = "http://localhost:8080/api/v1/products";
 
-// Task: Fetch Data from Database via API
+// Task 7.1: Intercept Errors & Handle Sessions
 async function fetchProducts() {
     try {
         const response = await fetch(API_URL);
-        if (!response.ok) throw new Error("Database Connection Failed");
+        
+        // Task 7.2: Redirect if not logged in
+        if (response.status === 401) {
+            alert("Please login to access Pet Palace.");
+            window.location.href = "login.html";
+            return;
+        }
+
+        if (!response.ok) throw new Error("Connection Failed");
         
         const products = await response.json();
         renderProductList(products);
-        updateFeaturedAndDiscounts(products);
     } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Error:", error);
+    }
+}
+
+// Task 3.1: Admin-only delete action
+async function deleteProduct(id) {
+    const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+
+    if (response.status === 403) {
+        alert("Access Denied: Only Admins can delete products.");
+    } else if (response.ok) {
+        alert("Product deleted successfully.");
+        fetchProducts();
     }
 }
 
@@ -24,31 +43,16 @@ function renderProductList(products) {
     if (!container) return;
 
     container.innerHTML = products.map(p => `
-        <article class="product-card" data-id="${p.id}">
+        <article class="product-card">
             <img src="${p.imageUrl}" alt="${p.name}">
             <h3>${p.name}</h3>
             <p class="price">₱${p.price.toFixed(2)}</p>
             <div class="card-buttons">
-                <a href="detail.html?id=${p.id}" class="btn">View Details</a>
-                <button class="add-to-cart-btn btn" onclick="addToCart(${p.id})">Add to Cart</button>
+                <button class="btn" onclick="addToCart(${p.id})">Add to Cart</button>
+                <button class="btn delete-btn" onclick="deleteProduct(${p.id})">Delete</button>
             </div>
         </article>
     `).join('');
 }
 
-function updateFeaturedAndDiscounts(products) {
-    // Logic for Featured/Discount sections if they exist on the page
-    const featured = document.getElementById('featured');
-    if (featured && products.length > 0) {
-        // You can pick a specific product to feature
-    }
-}
-
-// Initialized App
-document.addEventListener('DOMContentLoaded', () => {
-    fetchProducts();
-
-    // User Greeting
-    const greeting = document.getElementById('user-greeting');
-    if (greeting) greeting.textContent = "Rence A. Escala & Lyza Atencio";
-});
+document.addEventListener('DOMContentLoaded', fetchProducts);
