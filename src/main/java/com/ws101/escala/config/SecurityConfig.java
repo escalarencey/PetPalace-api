@@ -1,3 +1,4 @@
+
 package com.ws101.escala.config;
 
 import org.springframework.context.annotation.Bean;
