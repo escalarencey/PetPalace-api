@@ -1,38 +1,29 @@
-# Pet Palace - E-Commerce System (Full-Stack Implementation)
+# Laboratory 9: Securing the API with Sessions & Input Validation
+**Members:** Rence A. Escala & Lyza Atencio  
+**Course/Section:** BSIT 2B - University of Eastern Philippines
 
-## Group Members
-- **Rence A. Escala** (BSIT 2B)
-- **Lyza Atencio** (BSIT 2B)
+## 🛡️ Security Architecture
+In this laboratory, we implemented **Session-Based Authentication** using Spring Security. 
+- **Mechanism:** Unlike stateless JWTs, we use HTTP Sessions. Upon successful login, the server creates a session and sends a `JSESSIONID` cookie to the client.
+- **CSRF Protection:** Configured to ensure that form submissions are secure against cross-site request forgery.
+- **Password Hashing:** All user passwords are encrypted using `BCryptPasswordEncoder` before being stored in the MySQL database.
 
-**Course:** WS101 (Information Management)
-**University:** University of Eastern Philippines
+## 🛠️ Validation Rules
+We applied strict **Bean Validation** constraints on our Data Transfer Objects (DTOs) and Entities:
+- **Product Name:** Must not be blank (`@NotBlank`).
+- **Product Price:** Must be a positive value (`@Positive`).
+- **User Credentials:** Username and Password require a minimum length of 8 characters (`@Size`).
 
-## Project Overview
-**Pet Palace** is a mini e-commerce application developed as a collaborative project for Laboratory 8. This project demonstrates full-stack integration by connecting a **Spring Boot (Backend)**, a **MySQL (Database)**, and a **Vanilla JavaScript (Frontend)**. 
+## 🚀 API Reference
+| Endpoint | Method | Authentication | Access Level |
+| :--- | :--- | :--- | :--- |
+| `/api/v1/auth/register` | POST | Public | All |
+| `/login` | POST | Public | All |
+| `/api/v1/products` | GET | Public | All |
+| `/api/v1/products` | POST | Authenticated | USER / ADMIN |
+| `/api/v1/products/{id}` | DELETE | Authenticated | ADMIN ONLY |
 
-The system has transitioned from hardcoded data to a dynamic architecture, utilizing the Fetch API to retrieve product information in real-time from the database.
-
-## Technologies Used
-- **Backend:** Java Spring Boot 3 (Jakarta EE)
-- **Database:** MySQL
-- **Frontend:** HTML5, CSS3, JavaScript (Fetch API)
-- **Tools:** Spring Data JPA, Hibernate, GitHub, Figma (Prototyping)
-
-## Project Structure
-- `src/main/java/` - Logic for Controller, Service, Model, and Repository layers.
-- `src/main/resources/static/` - Stores all Frontend assets (HTML, CSS, JS, and Images).
-- `src/main/resources/application.properties` - Database connection settings.
-
-## How to Run
-1. **Setup Database:**
-   - Open MySQL and create the database: `CREATE DATABASE pet_palace;`
-2. **Configure Connection:**
-   - Update `application.properties` with your local MySQL credentials (username/password).
-3. **Run the Application:**
-   - Execute the Spring Boot application and navigate to `http://localhost:8080/landing.html`.
-
-## Lab 8 Key Features
-- [x] **Database Integration:** Product management via MySQL.
-- [x] **Dynamic Loading:** Implementation of `async/await` and `fetch()` for data retrieval.
-- [x] **RESTful API:** Developed backend endpoints at `/api/v1/products`.
-- [x] **Static Resource Mapping:** Organized handling of styles and product images.
+## 🧪 Testing Proofs (Image Demo Guide)
+1. **Successful Login:** Observe the `JSESSIONID` cookie in the browser's DevTools under the Application/Cookies tab.
+2. **Access Control:** Attempting to delete a product as a regular user returns a `403 Forbidden` status.
+3. **Validation:** Sending a negative price in a POST request returns a structured JSON error handled by our `GlobalExceptionHandler`.
