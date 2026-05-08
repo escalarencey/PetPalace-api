@@ -1,10 +1,4 @@
-package com.ws101.escala.repository;
-
-import com.ws101.escala.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.Optional;
-
+// Task 1.2: Repository for User
 public interface UserRepository extends JpaRepository<User, Long> {
-    // Important for login process
     Optional<User> findByUsername(String username);
 }
