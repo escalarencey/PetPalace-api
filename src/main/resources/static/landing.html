@@ -10,7 +10,19 @@
 
 <body id="landing-page">
     <header>
-        <h1>Pet Palace</h1>
+        <div class="header-top">
+            <h1>Pet Palace</h1>
+            <div class="user-auth-controls">
+                <span id="user-greeting" style="font-weight: bold; margin-right: 10px;">
+                    Rence A. Escala & Lyza Atencio
+                </span>
+                <form action="/logout" method="POST" style="display: inline;">
+                    <button type="submit" class="btn-logout" style="background: #ff4444; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px;">
+                        Log Out
+                    </button>
+                </form>
+            </div>
+        </div>
         <nav>
             <ul>
                 <li><a href="products.html">Dogs</a></li>
@@ -19,6 +31,7 @@
                 <li><a href="products.html">Fish</a></li>
                 <li><a href="cart.html">Cart</a></li>
                 <li><a href="account.html">Account</a></li>
+                <li><a href="login.html" id="login-link">Login</a></li>
             </ul>
         </nav>
     </header>
@@ -34,38 +47,40 @@
 
         <section id="featured" class="product-section">
             <h2>Featured Product</h2>
-            <article class="product-card featured-card" data-id="6">
-                <img src="tower.jpg" alt="Cat Tower">
-                <h3>Pink Multi-Level Cat Tower</h3>
-                <p class="price">1,250.00</p>
-                <div class="card-buttons">
-                    <a href="detail.html" class="btn-small">View Item</a>
-                    <button class="add-to-cart-btn btn-small" data-id="6">Add to Cart</button>
-                </div>
-            </article>
+            <div class="product-list-featured">
+                <article class="product-card featured-card">
+                    <img src="tower.jpg" alt="Cat Tower">
+                    <h3>Pink Multi-Level Cat Tower</h3>
+                    <p class="price">₱1,250.00</p>
+                    <div class="card-buttons">
+                        <a href="detail.html" class="btn-small">View Item</a>
+                        <button class="add-to-cart-btn btn-small">Add to Cart</button>
+                    </div>
+                </article>
+            </div>
         </section>
 
         <hr>
 
         <section id="discounts" class="product-section">
             <h2>Special Offers</h2>
-            <article class="product-card discount-card" data-id="4">
+            <article class="product-card discount-card">
                 <img src="laser.jpg" alt="Cat laser">
                 <h3>Cat Laser Toy</h3>
                 <p class="promo-price">
                     <del>₱80.00</del> 
-                    <span class="new-price">40.00</span>
+                    <span class="new-price">₱40.00</span>
                 </p>
                 <span class="badge">50% OFF</span>
                 <div class="card-buttons">
-                    <button class="add-to-cart-btn btn-small" data-id="4">Add to Cart</button>
+                    <button class="add-to-cart-btn btn-small">Add to Cart</button>
                 </div>
             </article>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 Pet Palace Philippines</p>
+        <p>&copy; 2026 Pet Palace Philippines | Developed by Rence & Lyza</p>
     </footer>
 
     <script src="script.js"></script>
