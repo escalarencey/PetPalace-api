@@ -12,50 +12,39 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity // Task 3.2: Enable @PreAuthorize in controllers
+@EnableMethodSecurity // Task 3.2: Method Security
 public class SecurityConfig {
 
-    // Task 1.3: Password Encoding bean
+    // Task 1.3: Password Encoder
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // Task 1.4: Security Filter Chain configuration
+    // Task 1.4: Filter Chain
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            // Task 1.4: Enable CSRF for Session Security
-            .csrf(csrf -> csrf.disable()) // Note: Disable temporarily if testing via Postman without tokens, but lab requires it enabled eventually.
-            
+            .csrf(csrf -> csrf.disable()) // Note: Lab asks for CSRF enabled, but disable first for Postman testing
             .authorizeHttpRequests(auth -> auth
-                // Task 1.4: Permit All - Public Endpoints
+                // Permit All (Public)
                 .requestMatchers("/", "/landing.html", "/products.html", "/signup.html", "/login.html", "/css/**", "/js/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
                 .requestMatchers("/api/v1/auth/register").permitAll()
                 
-                // Task 1.4 & 3.1: Require Auth for protected actions
+                // Protected
                 .requestMatchers(HttpMethod.POST, "/api/v1/orders/**").authenticated()
                 .requestMatchers(HttpMethod.DELETE, "/api/v1/products/**").hasRole("ADMIN")
-                
                 .anyRequest().authenticated()
             )
-            
-            // Task 1.4: Enable Form Login
-            .formLogin(form -> form
-                .loginPage("/login.html") // Custom login page
-                .loginProcessingUrl("/login")
+            .formLogin(form -> form // Task 1.4: Form Login
+                .loginPage("/login.html")
                 .defaultSuccessUrl("/landing.html", true)
                 .permitAll()
             )
-            
-            // Task 2.3: Logout handling
-            .logout(logout -> logout
+            .logout(logout -> logout // Task 2.3: Logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login.html?logout")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll()
             );
 
         return http.build();
