@@ -9,23 +9,18 @@
 </head>
 <body id="signup-page">
 
-
     <main class="auth-container">
         <div class="auth-box">
             <h2>Create Your Account</h2>
             
             <form id="signup-form">
                 <p>
-                    <label for="user">Full Name</label>
-                    <input type="text" id="user" placeholder="Rence A. Escala" required>
-                </p>
-                <p>
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" placeholder="escala03@email.com" required>
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="rence_escala" required minlength="8" maxlength="20">
                 </p>
                 <p>
                     <label for="pass">Password</label>
-                    <input type="password" id="pass" placeholder="Enter secure password" required>
+                    <input type="password" id="pass" placeholder="Enter secure password" required minlength="8">
                 </p>
 
                 <p class="checkbox-group">
@@ -42,22 +37,45 @@
         </div>
     </main>
 
-    <script src="script.js"></script>
-
     <script>
         const signupForm = document.getElementById('signup-form');
         if (signupForm) {
-            signupForm.addEventListener('submit', (e) => {
+            signupForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const name = document.getElementById('user').value;
                 
-                // Simulating successful signup
-                alert("Account created successfully for " + name + "!");
-                window.location.href = 'account.html';
+                // Task 2.1: Prepare user data for API
+                const userData = {
+                    username: document.getElementById('username').value,
+                    password: document.getElementById('pass').value,
+                    role: "ROLE_USER" // Default role
+                };
+
+                try {
+                    // Task 2.1: Actual POST request to backend
+                    const response = await fetch('/api/v1/auth/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(userData)
+                    });
+
+                    if (response.ok) {
+                        // Task 2.1: Success handling
+                        alert("Account created successfully for " + userData.username + "!");
+                        window.location.href = 'login.html'; // Redirect to Login page
+                    } else {
+                        // Task 5: Handle Validation Errors from GlobalExceptionHandler
+                        const errorData = await response.json();
+                        alert("Registration Failed: " + JSON.stringify(errorData));
+                    }
+                } catch (error) {
+                    console.error("Connection error:", error);
+                    alert("Cannot connect to server. Is the backend running?");
+                }
             });
         }
     </script>
 
 </body>
 </html>
-
